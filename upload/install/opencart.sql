@@ -1034,9 +1034,26 @@ CREATE TABLE IF NOT EXISTS `oc_customer` (
   `safe` tinyint(1) NOT NULL,
   `token` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
+  `exist_store` int(1) NOT NULL DEFAULT '0',
+  `customer_store_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_customer_store`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_customer_store` (
+  `customer_store_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_name` varchar(255) NOT NULL,
+  `store_desc` text NOT NULL,
+  PRIMARY KEY (`customer_store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `oc_customer_store` (`customer_store_id`, `store_name`, `store_desc`) VALUES
+(1, 'test for customer store', 'just for you');
 -- --------------------------------------------------------
 
 --
@@ -2230,6 +2247,7 @@ CREATE TABLE IF NOT EXISTS `oc_product` (
   `viewed` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
+  `customer_store_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
