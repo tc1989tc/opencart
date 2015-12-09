@@ -22,6 +22,8 @@ class ModelOpenbayOpenbay extends Model {
 
 		$this->openbay->log('Starting update test');
 
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
 		if (!function_exists("exception_error_handler")) {
 			function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 				throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
@@ -36,9 +38,9 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		// create a tmp folder
-		if (!is_dir(DIR_DOWNLOAD . '/tmp')) {
+		if (!is_dir($web_root . '/system/download/tmp')) {
 			try {
-				mkdir(DIR_DOWNLOAD . '/tmp');
+				mkdir($web_root . '/system/download/tmp');
 			} catch(ErrorException $ex) {
 				$this->error[] = $ex->getMessage();
 			}
@@ -46,7 +48,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		// create tmp file
 		try {
-			$tmp_file = fopen(DIR_DOWNLOAD . '/tmp/test_file.php', 'w+');
+			$tmp_file = fopen($web_root . '/system/download/tmp/test_file.php', 'w+');
 		} catch(ErrorException $ex) {
 			$this->error[] = $ex->getMessage();
 		}
@@ -67,14 +69,14 @@ class ModelOpenbayOpenbay extends Model {
 
 		// remove tmp file
 		try {
-			unlink(DIR_DOWNLOAD . '/tmp/test_file.php');
+			unlink($web_root . '/system/download/tmp/test_file.php');
 		} catch(ErrorException $ex) {
 			$this->error[] = $ex->getMessage();
 		}
 
 		// delete tmp folder
 		try {
-			rmdir(DIR_DOWNLOAD . '/tmp');
+			rmdir($web_root . '/system/download/tmp');
 		} catch(ErrorException $ex) {
 			$this->error[] = $ex->getMessage();
 		}
@@ -120,7 +122,9 @@ class ModelOpenbayOpenbay extends Model {
 	public function updateV2Download($beta = 0) {
 		$this->openbay->log('Downloading');
 
-		$local_file = DIR_DOWNLOAD . '/openbaypro_update.zip';
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
+		$local_file = $web_root . 'system/download/openbaypro_update.zip';
 		$handle = fopen($local_file, "w+");
 
 		$post = array('version' => 2, 'beta' => $beta);
@@ -169,7 +173,7 @@ class ModelOpenbayOpenbay extends Model {
 		try {
 			$zip = new ZipArchive();
 
-			if ($zip->open(DIR_DOWNLOAD . 'openbaypro_update.zip')) {
+			if ($zip->open($web_root . 'system/download/openbaypro_update.zip')) {
 				$zip->extractTo($web_root);
 				$zip->close();
 			} else {

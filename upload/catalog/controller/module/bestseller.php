@@ -60,11 +60,15 @@ class ControllerModuleBestSeller extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
 				);
 			}
 
-			return $this->load->view('module/bestseller', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/bestseller.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/bestseller.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/bestseller.tpl', $data);
+			}
 		}
 	}
 }

@@ -2,9 +2,9 @@
 class ControllerAccountAccount extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
+			$this->session->data['redirect'] = $this->url->link('account/account', '', 'SSL');
 
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 
 		$this->load->language('account/account');
@@ -20,7 +20,7 @@ class ControllerAccountAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', '', 'SSL')
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -34,12 +34,14 @@ class ControllerAccountAccount extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_my_account'] = $this->language->get('text_my_account');
+		$data['text_my_store'] = $this->language->get('text_my_store');
 		$data['text_my_orders'] = $this->language->get('text_my_orders');
 		$data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_password'] = $this->language->get('text_password');
 		$data['text_address'] = $this->language->get('text_address');
 		$data['text_wishlist'] = $this->language->get('text_wishlist');
+		$data['text_store'] = $this->language->get('text_store');
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_download'] = $this->language->get('text_download');
 		$data['text_reward'] = $this->language->get('text_reward');
@@ -48,19 +50,20 @@ class ControllerAccountAccount extends Controller {
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
 
-		$data['edit'] = $this->url->link('account/edit', '', true);
-		$data['password'] = $this->url->link('account/password', '', true);
-		$data['address'] = $this->url->link('account/address', '', true);
+		$data['edit'] = $this->url->link('account/edit', '', 'SSL');
+		$data['password'] = $this->url->link('account/password', '', 'SSL');
+		$data['address'] = $this->url->link('account/address', '', 'SSL');
 		$data['wishlist'] = $this->url->link('account/wishlist');
-		$data['order'] = $this->url->link('account/order', '', true);
-		$data['download'] = $this->url->link('account/download', '', true);
-		$data['return'] = $this->url->link('account/return', '', true);
-		$data['transaction'] = $this->url->link('account/transaction', '', true);
-		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
-		$data['recurring'] = $this->url->link('account/recurring', '', true);
+		$data['store']  = $this->url->link('account/personstore');
+		$data['order'] = $this->url->link('account/order', '', 'SSL');
+		$data['download'] = $this->url->link('account/download', '', 'SSL');
+		$data['return'] = $this->url->link('account/return', '', 'SSL');
+		$data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
+		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
+		$data['recurring'] = $this->url->link('account/recurring', '', 'SSL');
 
 		if ($this->config->get('reward_status')) {
-			$data['reward'] = $this->url->link('account/reward', '', true);
+			$data['reward'] = $this->url->link('account/reward', '', 'SSL');
 		} else {
 			$data['reward'] = '';
 		}
@@ -71,8 +74,12 @@ class ControllerAccountAccount extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
-		$this->response->setOutput($this->load->view('account/account', $data));
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/account.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/account.tpl', $data));
+		}
 	}
 
 	public function country() {

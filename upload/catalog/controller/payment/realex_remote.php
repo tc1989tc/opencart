@@ -58,7 +58,11 @@ class ControllerPaymentRealexRemote extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/realex_remote', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex_remote.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/realex_remote.tpl', $data);
+		} else {
+			return $this->load->view('default/template/payment/realex_remote.tpl', $data);
+		}
 	}
 
 	public function send() {
@@ -135,7 +139,7 @@ class ControllerPaymentRealexRemote extends Controller {
 					$json['ACSURL'] = (string)$verify_3ds->url;
 					$json['MD'] = $md;
 					$json['PaReq'] = (string)$verify_3ds->pareq;
-					$json['TermUrl'] = $this->url->link('payment/realex_remote/acsReturn', '', true);
+					$json['TermUrl'] = $this->url->link('payment/realex_remote/acsReturn', '', 'SSL');
 
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
@@ -309,7 +313,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 					$this->session->data['error'] = $this->language->get('error_3d_unsuccessful');
 
-					$this->response->redirect($this->url->link('checkout/checkout', '', true));
+					$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 					die();
 				}
 			}
@@ -337,12 +341,12 @@ class ControllerPaymentRealexRemote extends Controller {
 			if ($capture_result->result != '00') {
 				$this->session->data['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
 
-				$this->response->redirect($this->url->link('checkout/checkout', '', true));
+				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			} else {
 				$this->response->redirect($this->url->link('checkout/success'));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', true));
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 	}
 }

@@ -4,7 +4,7 @@ class ControllerAffiliateForgotten extends Controller {
 
 	public function index() {
 		if ($this->affiliate->isLogged()) {
-			$this->response->redirect($this->url->link('affiliate/account', '', true));
+			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}
 
 		$this->load->language('affiliate/forgotten');
@@ -16,7 +16,7 @@ class ControllerAffiliateForgotten extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->language('mail/forgotten');
 
-			$password = token(10);
+			$password = substr(md5(mt_rand()), 0, 10);
 
 			$this->model_affiliate_affiliate->editPassword($this->request->post['email'], $password);
 
@@ -58,7 +58,7 @@ class ControllerAffiliateForgotten extends Controller {
 				$this->model_affiliate_activity->addActivity('forgotten', $activity_data);
 			}
 
-			$this->response->redirect($this->url->link('affiliate/login', '', true));
+			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -70,12 +70,12 @@ class ControllerAffiliateForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', true)
+			'href' => $this->url->link('affiliate/account', '', 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('affiliate/forgotten', '', true)
+			'href' => $this->url->link('affiliate/forgotten', '', 'SSL')
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -94,9 +94,9 @@ class ControllerAffiliateForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/forgotten', '', true);
+		$data['action'] = $this->url->link('affiliate/forgotten', '', 'SSL');
 
-		$data['back'] = $this->url->link('affiliate/login', '', true);
+		$data['back'] = $this->url->link('affiliate/login', '', 'SSL');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -105,7 +105,11 @@ class ControllerAffiliateForgotten extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('affiliate/forgotten', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/forgotten.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/forgotten.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/affiliate/forgotten.tpl', $data));
+		}
 	}
 
 	protected function validate() {
@@ -113,12 +117,6 @@ class ControllerAffiliateForgotten extends Controller {
 			$this->error['warning'] = $this->language->get('error_email');
 		} elseif (!$this->model_affiliate_affiliate->getTotalAffiliatesByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
-		}
-
-		$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
-
-		if ($affiliate_info && !$affiliate_info['approved']) {
-		    $this->error['warning'] = $this->language->get('error_approved');
 		}
 
 		return !$this->error;

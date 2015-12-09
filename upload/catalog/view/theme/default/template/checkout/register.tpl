@@ -281,11 +281,8 @@
       <?php } ?>
       <?php } ?>
     </fieldset>
-
-    <?php echo $captcha; ?>
   </div>
 </div>
-
 <div class="checkbox">
   <label for="newsletter">
     <input type="checkbox" name="newsletter" value="1" id="newsletter" />

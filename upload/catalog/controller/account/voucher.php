@@ -35,12 +35,12 @@ class ControllerAccountVoucher extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
+			'href' => $this->url->link('account/account', '', 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_voucher'),
-			'href' => $this->url->link('account/voucher', '', true)
+			'href' => $this->url->link('account/voucher', '', 'SSL')
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -103,7 +103,7 @@ class ControllerAccountVoucher extends Controller {
 			$data['error_amount'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/voucher', '', true);
+		$data['action'] = $this->url->link('account/voucher', '', 'SSL');
 
 		if (isset($this->request->post['to_name'])) {
 			$data['to_name'] = $this->request->post['to_name'];
@@ -133,9 +133,9 @@ class ControllerAccountVoucher extends Controller {
 			$data['from_email'] = '';
 		}
 
-		$this->load->model('total/voucher_theme');
+		$this->load->model('checkout/voucher_theme');
 
-		$data['voucher_themes'] = $this->model_total_voucher_theme->getVoucherThemes();
+		$data['voucher_themes'] = $this->model_checkout_voucher_theme->getVoucherThemes();
 
 		if (isset($this->request->post['voucher_theme_id'])) {
 			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
@@ -168,7 +168,11 @@ class ControllerAccountVoucher extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/voucher', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/voucher.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/voucher.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/voucher.tpl', $data));
+		}
 	}
 
 	public function success() {
@@ -203,7 +207,11 @@ class ControllerAccountVoucher extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('common/success', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
+		}
 	}
 
 	protected function validate() {

@@ -212,6 +212,9 @@ $(document).delegate('#button-register', 'click', function() {
         beforeSend: function() {
 			$('#button-register').button('loading');
 		},
+        complete: function() {
+            $('#button-register').button('reset');
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
             $('.form-group').removeClass('has-error');
@@ -219,8 +222,6 @@ $(document).delegate('#button-register', 'click', function() {
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#button-register').button('reset');
-
                 if (json['error']['warning']) {
                     $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
@@ -316,9 +317,6 @@ $(document).delegate('#button-register', 'click', function() {
                 $.ajax({
                     url: 'index.php?route=checkout/payment_address',
                     dataType: 'html',
-                    complete: function() {
-                        $('#button-register').button('reset');
-                    },
                     success: function(html) {
                         $('#collapse-payment-address .panel-body').html(html);
 
@@ -438,14 +436,15 @@ $(document).delegate('#button-shipping-address', 'click', function() {
         beforeSend: function() {
 			$('#button-shipping-address').button('loading');
 	    },
+        complete: function() {
+			$('#button-shipping-address').button('reset');
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
 
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#button-shipping-address').button('reset');
-
                 if (json['error']['warning']) {
                     $('#collapse-shipping-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
@@ -466,9 +465,6 @@ $(document).delegate('#button-shipping-address', 'click', function() {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
                     dataType: 'html',
-                    complete: function() {
-                        $('#button-shipping-address').button('reset');
-                    },
                     success: function(html) {
                         $('#collapse-shipping-method .panel-body').html(html);
 
@@ -523,14 +519,15 @@ $(document).delegate('#button-guest', 'click', function() {
         beforeSend: function() {
        		$('#button-guest').button('loading');
 	    },
+        complete: function() {
+			$('#button-guest').button('reset');
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
 
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#button-guest').button('reset');
-
                 if (json['error']['warning']) {
                     $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
@@ -555,9 +552,6 @@ $(document).delegate('#button-guest', 'click', function() {
                     $.ajax({
                         url: 'index.php?route=checkout/shipping_method',
                         dataType: 'html',
-                        complete: function() {
-                            $('#button-guest').button('reset');
-                        },
                         success: function(html) {
 							// Add the shipping address
                             $.ajax({
@@ -590,9 +584,6 @@ $(document).delegate('#button-guest', 'click', function() {
                     $.ajax({
                         url: 'index.php?route=checkout/guest_shipping',
                         dataType: 'html',
-                        complete: function() {
-                            $('#button-guest').button('reset');
-                        },
                         success: function(html) {
                             $('#collapse-shipping-address .panel-body').html(html);
 
@@ -613,9 +604,6 @@ $(document).delegate('#button-guest', 'click', function() {
                 $.ajax({
                     url: 'index.php?route=checkout/payment_method',
                     dataType: 'html',
-                    complete: function() {
-                        $('#button-guest').button('reset');
-                    },
                     success: function(html) {
                         $('#collapse-payment-method .panel-body').html(html);
 
@@ -648,14 +636,15 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
         beforeSend: function() {
         	$('#button-guest-shipping').button('loading');
 		},
+        complete: function() {
+			$('#button-guest-shipping').button('reset');
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
 
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#button-guest-shipping').button('reset');
-
                 if (json['error']['warning']) {
                     $('#collapse-shipping-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
@@ -676,9 +665,6 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
                     dataType: 'html',
-                    complete: function() {
-                        $('#button-guest-shipping').button('reset');
-                    },
                     success: function(html) {
                         $('#collapse-shipping-method .panel-body').html(html);
 
@@ -710,14 +696,15 @@ $(document).delegate('#button-shipping-method', 'click', function() {
         beforeSend: function() {
         	$('#button-shipping-method').button('loading');
 		},
+        complete: function() {
+			$('#button-shipping-method').button('reset');
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
 
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#button-shipping-method').button('reset');
-
                 if (json['error']['warning']) {
                     $('#collapse-shipping-method .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
@@ -725,9 +712,6 @@ $(document).delegate('#button-shipping-method', 'click', function() {
                 $.ajax({
                     url: 'index.php?route=checkout/payment_method',
                     dataType: 'html',
-                    complete: function() {
-                        $('#button-shipping-method').button('reset');
-                    },
                     success: function(html) {
                         $('#collapse-payment-method .panel-body').html(html);
 
@@ -758,26 +742,22 @@ $(document).delegate('#button-payment-method', 'click', function() {
         beforeSend: function() {
          	$('#button-payment-method').button('loading');
 		},
+        complete: function() {
+            $('#button-payment-method').button('reset');
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
 
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#button-payment-method').button('reset');
-                
                 if (json['error']['warning']) {
                     $('#collapse-payment-method .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
-
-		$('#button-payment-method').button('reset');
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/confirm',
                     dataType: 'html',
-                    complete: function() {
-                        $('#button-payment-method').button('reset');
-                    },
                     success: function(html) {
                         $('#collapse-checkout-confirm .panel-body').html(html);
 

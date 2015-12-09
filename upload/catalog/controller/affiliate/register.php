@@ -4,7 +4,7 @@ class ControllerAffiliateRegister extends Controller {
 
 	public function index() {
 		if ($this->affiliate->isLogged()) {
-			$this->response->redirect($this->url->link('affiliate/account', '', true));
+			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}
 
 		$this->load->language('affiliate/register');
@@ -17,9 +17,8 @@ class ControllerAffiliateRegister extends Controller {
 			$affiliate_id = $this->model_affiliate_affiliate->addAffiliate($this->request->post);
 
 			// Clear any previous login attempts in not registered.
-    		$this->load->model('account/customer');
-			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-
+			$this->model_affiliate_affiliate->deleteLoginAttempts($this->request->post['email']);
+			
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);
 
 			// Add to activity log
@@ -35,8 +34,6 @@ class ControllerAffiliateRegister extends Controller {
 			$this->response->redirect($this->url->link('affiliate/success'));
 		}
 
-		$this->load->language('affiliate/register');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -46,19 +43,19 @@ class ControllerAffiliateRegister extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', true)
+			'href' => $this->url->link('affiliate/account', '', 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_register'),
-			'href' => $this->url->link('affiliate/register', '', true)
+			'href' => $this->url->link('affiliate/register', '', 'SSL')
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
-		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login', '', true));
+		$data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('affiliate/login', '', 'SSL'));
 		$data['text_signup'] = $this->language->get('text_signup');
 		$data['text_your_details'] = $this->language->get('text_your_details');
 		$data['text_your_address'] = $this->language->get('text_your_address');
@@ -167,7 +164,7 @@ class ControllerAffiliateRegister extends Controller {
 			$data['error_zone'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/register', '', true);
+		$data['action'] = $this->url->link('affiliate/register', '', 'SSL');
 
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];
@@ -317,20 +314,13 @@ class ControllerAffiliateRegister extends Controller {
 			$data['confirm'] = '';
 		}
 
-		// Captcha
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
-		} else {
-			$data['captcha'] = '';
-		}
-
 		if ($this->config->get('config_affiliate_id')) {
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
 			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_affiliate_id'), true), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('config_affiliate_id'), 'SSL'), $information_info['title'], $information_info['title']);
 			} else {
 				$data['text_agree'] = '';
 			}
@@ -351,7 +341,11 @@ class ControllerAffiliateRegister extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('affiliate/register', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/register.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/register.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/affiliate/register.tpl', $data));
+		}
 	}
 
 	protected function validate() {
@@ -405,15 +399,6 @@ class ControllerAffiliateRegister extends Controller {
 
 		if ($this->request->post['confirm'] != $this->request->post['password']) {
 			$this->error['confirm'] = $this->language->get('error_confirm');
-		}
-
-		// Captcha
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
-
-			if ($captcha) {
-				$this->error['captcha'] = $captcha;
-			}
 		}
 
 		if ($this->config->get('config_affiliate_id')) {

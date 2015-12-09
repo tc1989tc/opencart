@@ -505,7 +505,6 @@
             </div>
           </div>
         </fieldset>
-        <?php echo $captcha; ?>
         <?php if ($text_agree) { ?>
         <div class="buttons">
           <div class="pull-right"><?php echo $text_agree; ?>

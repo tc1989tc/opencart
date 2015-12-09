@@ -27,7 +27,7 @@ class ControllerPaymentWorldpay extends Controller {
 
 		$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
 
-		$data['form_submit'] = $this->url->link('payment/worldpay/send', '', true);
+		$data['form_submit'] = $this->url->link('payment/worldpay/send', '', 'SSL');
 
 		if ($this->config->get('worldpay_card') == '1' && $this->customer->isLogged()) {
 			$data['worldpay_card'] = true;
@@ -47,7 +47,11 @@ class ControllerPaymentWorldpay extends Controller {
 			$data['recurring_products'] = true;
 		}
 
-		return $this->load->view('payment/worldpay', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/worldpay.tpl', $data);
+		} else {
+			return $this->load->view('default/template/payment/worldpay.tpl', $data);
+		}
 	}
 
 	public function send() {
@@ -125,11 +129,11 @@ class ControllerPaymentWorldpay extends Controller {
 				$this->model_payment_worldpay->recurringPayment($item, $this->session->data['order_id'] . rand(), $this->request->post['token']);
 			}
 
-			$this->response->redirect($this->url->link('checkout/success', '', true));
+			$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
 		} else {
 
 			$this->session->data['error'] = $this->language->get('error_process_order');
-			$this->response->redirect($this->url->link('checkout/checkout', '', true));
+			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 		}
 	}
 

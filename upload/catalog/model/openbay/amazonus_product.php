@@ -52,7 +52,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 	}
 
 	public function getProductQuantity($product_id, $var = '') {
-		$this->load->library('openbay/amazonus');
+		$this->load->library('amazonus');
 
 		$result = null;
 

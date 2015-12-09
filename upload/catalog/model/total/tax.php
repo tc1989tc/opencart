@@ -1,8 +1,6 @@
 <?php
 class ModelTotalTax extends Model {
-	public function getTotal($totals) {
-		extract($totals);
-		
+	public function getTotal(&$total_data, &$total, &$taxes) {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {
 				$total_data[] = array(

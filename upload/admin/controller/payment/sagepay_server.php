@@ -15,7 +15,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -70,22 +70,22 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/sagepay_server', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('payment/sagepay_server', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('payment/sagepay_server', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('payment/sagepay_server', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['sagepay_server_vendor'])) {
 			$data['sagepay_server_vendor'] = $this->request->post['sagepay_server_vendor'];
@@ -181,7 +181,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/sagepay_server', $data));
+		$this->response->setOutput($this->load->view('payment/sagepay_server.tpl', $data));
 	}
 
 	public function install() {
@@ -194,7 +194,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$this->model_payment_sagepay_server->uninstall();
 	}
 
-	public function order() {
+	public function action() {
 
 		if ($this->config->get('sagepay_server_status')) {
 			$this->load->model('payment/sagepay_server');
@@ -236,7 +236,7 @@ class ControllerPaymentSagepayServer extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/sagepay_server_order', $data);
+				return $this->load->view('payment/sagepay_server_order.tpl', $data);
 			}
 		}
 	}

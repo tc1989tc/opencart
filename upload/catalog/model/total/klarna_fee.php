@@ -1,8 +1,6 @@
 <?php
 class ModelTotalKlarnaFee extends Model {
-	public function getTotal($totals) {
-		extract($totals);
-		
+	public function getTotal(&$total_data, &$total, &$taxes) {
 		$this->load->language('total/klarna_fee');
 
 		$status = true;

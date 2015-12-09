@@ -24,6 +24,10 @@
         <li><a href="<?php echo $address; ?>"><?php echo $text_address; ?></a></li>
         <li><a href="<?php echo $wishlist; ?>"><?php echo $text_wishlist; ?></a></li>
       </ul>
+      <h2><?php echo $text_my_store; ?></h2>
+      <ul class="list-unstyled">
+        <li><a href="<?php echo $store; ?>"><?php echo $text_store; ?></a></li>
+      </ul>
       <h2><?php echo $text_my_orders; ?></h2>
       <ul class="list-unstyled">
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>

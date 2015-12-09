@@ -41,29 +41,29 @@ class ControllerMarketingContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		$this->load->model('customer/customer_group');
+		$this->load->model('sale/customer_group');
 
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('marketing/contact', $data));
+		$this->response->setOutput($this->load->view('marketing/contact.tpl', $data));
 	}
 
 	public function send() {
@@ -94,14 +94,10 @@ class ControllerMarketingContact extends Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
-				
-				$this->load->model('setting/setting');
-				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
-				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
-				$this->load->model('customer/customer');
+				$this->load->model('sale/customer');
 
-				$this->load->model('customer/customer_group');
+				$this->load->model('sale/customer_group');
 
 				$this->load->model('marketing/affiliate');
 
@@ -125,9 +121,9 @@ class ControllerMarketingContact extends Controller {
 							'limit'             => 10
 						);
 
-						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
 
-						$results = $this->model_customer_customer->getCustomers($customer_data);
+						$results = $this->model_sale_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -139,9 +135,9 @@ class ControllerMarketingContact extends Controller {
 							'limit' => 10
 						);
 
-						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
 
-						$results = $this->model_customer_customer->getCustomers($customer_data);
+						$results = $this->model_sale_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -154,9 +150,9 @@ class ControllerMarketingContact extends Controller {
 							'limit'                    => 10
 						);
 
-						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
 
-						$results = $this->model_customer_customer->getCustomers($customer_data);
+						$results = $this->model_sale_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
 							$emails[$result['customer_id']] = $result['email'];
@@ -165,7 +161,7 @@ class ControllerMarketingContact extends Controller {
 					case 'customer':
 						if (!empty($this->request->post['customer'])) {
 							foreach ($this->request->post['customer'] as $customer_id) {
-								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+								$customer_info = $this->model_sale_customer->getCustomer($customer_id);
 
 								if ($customer_info) {
 									$emails[] = $customer_info['email'];
@@ -222,7 +218,7 @@ class ControllerMarketingContact extends Controller {
 					}
 
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), true));
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), 'SSL'));
 					} else {
 						$json['next'] = '';
 					}
@@ -247,7 +243,7 @@ class ControllerMarketingContact extends Controller {
 							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 							$mail->setTo($email);
-							$mail->setFrom($store_email);
+							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
 							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
 							$mail->setHtml($message);

@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.1.0.2_rc');
+define('VERSION', '2.0.3.1');
 
 // Configuration
 if (is_file('config.php')) {
@@ -28,7 +28,7 @@ $config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
 // Store
@@ -51,7 +51,7 @@ foreach ($query->rows as $result) {
 	if (!$result['serialized']) {
 		$config->set($result['key'], $result['value']);
 	} else {
-		$config->set($result['key'], json_decode($result['value'], true));
+		$config->set($result['key'], unserialize($result['value']));
 	}
 }
 
@@ -68,7 +68,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($code, $message, $file, $line) {
+function error_handler($errno, $errstr, $errfile, $errline) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -76,7 +76,7 @@ function error_handler($code, $message, $file, $line) {
 		return false;
 	}
 
-	switch ($code) {
+	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			$error = 'Notice';
@@ -95,11 +95,11 @@ function error_handler($code, $message, $file, $line) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
+		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
 
 	return true;
@@ -124,24 +124,6 @@ $registry->set('cache', $cache);
 
 // Session
 $session = new Session();
-
-if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
-	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
-
-	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (as.api_id = ai.api_id) WHERE a.status = '1' AND as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
-
-	if ($query->num_rows) {
-		$session->start($query->row['session_id'], $query->row['session_name']);
-		
-		$registry->set('session', $session);
-
-		// keep the session alive
-		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . (int)$query->row['api_session_id'] . "'");
-	}
-} else {
-	$session->start();
-}
-
 $registry->set('session', $session);
 
 // Language Detection
@@ -200,7 +182,7 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 
 // Customer
-$customer = new Cart\Customer($registry);
+$customer = new Customer($registry);
 $registry->set('customer', $customer);
 
 // Customer Group
@@ -221,44 +203,38 @@ if (isset($request->get['tracking'])) {
 }
 
 // Affiliate
-$registry->set('affiliate', new Cart\Affiliate($registry));
+$registry->set('affiliate', new Affiliate($registry));
 
 // Currency
-$registry->set('currency', new Cart\Currency($registry));
+$registry->set('currency', new Currency($registry));
 
 // Tax
-$registry->set('tax', new Cart\Tax($registry));
+$registry->set('tax', new Tax($registry));
 
 // Weight
-$registry->set('weight', new Cart\Weight($registry));
+$registry->set('weight', new Weight($registry));
 
 // Length
-$registry->set('length', new Cart\Length($registry));
+$registry->set('length', new Length($registry));
 
 // Cart
-$registry->set('cart', new Cart\Cart($registry));
+$registry->set('cart', new Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
-// OpenBay Pro
+//OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);
 
-$query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'catalog/%'");
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
+	$event->register($result['trigger'], $result['action']);
 }
-
-// Template
-$event->register('view/*/before', new Action('override/template'));
-
-// Test
-$event->register('model/catalog/information/getInformation/before', new Action('override/test/model'));
 
 // Front Controller
 $controller = new Front($registry);
@@ -278,7 +254,6 @@ if (isset($request->get['route'])) {
 
 // Dispatch
 $controller->dispatch($action, new Action('error/not_found'));
-
 
 // Output
 $response->output();

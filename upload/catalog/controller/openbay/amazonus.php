@@ -8,7 +8,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->library('log');
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/amazonus_order');
-		$this->load->language('openbay/amazonus_order');
+		$this->language->load('openbay/amazonus_order');
 
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/order - started');
@@ -295,6 +295,8 @@ class ControllerOpenbayAmazonus extends Controller {
 			}
 		}
 
+		$this->event->trigger('post.order.history.add', $order_id);
+
 		$logger->write('Order ' . $amazonus_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 
@@ -319,7 +321,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 
 		$this->load->library('log');
-		$this->load->library('openbay/amazonus');
+		$this->load->library('amazonus');
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->model('openbay/amazonus_product');
 
@@ -416,7 +418,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		ob_start();
 
-		$this->load->library('openbay/amazonus');
+		$this->load->library('amazonus');
 		$this->load->model('openbay/amazonus_product');
 		$this->load->library('log');
 		$logger = new Log('amazonus_product.log');

@@ -24,7 +24,7 @@ class ControllerUpgrade extends Controller {
 		$data['header'] = $this->load->controller('header');
 		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->load->view('upgrade', $data));
+		$this->response->setOutput($this->load->view('upgrade.tpl', $data));
 	}
 
 	public function success() {
@@ -33,7 +33,7 @@ class ControllerUpgrade extends Controller {
 		$data['header'] = $this->load->controller('header');
 		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->load->view('success', $data));
+		$this->response->setOutput($this->load->view('success.tpl', $data));
 	}
 
 	private function validate() {

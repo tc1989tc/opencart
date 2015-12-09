@@ -5,9 +5,13 @@ class ControllerPaymentG2APay extends Controller {
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$data['action'] = $this->url->link('payment/g2apay/checkout', '', true);
+		$data['action'] = $this->url->link('payment/g2apay/checkout', '', 'SSL');
 
-		return $this->load->view('payment/g2apay', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/g2apay.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/g2apay.tpl', $data);
+		} else {
+			return $this->load->view('default/template/payment/g2apay.tpl', $data);
+		}
 	}
 
 	public function checkout() {
@@ -28,16 +32,15 @@ class ControllerPaymentG2APay extends Controller {
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
 				$this->load->model('total/' . $result['code']);
-				
-				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal(array($order_data['totals'], $total, $taxes));
+
+				$this->{'model_total_' . $result['code']}->getTotal($order_data['totals'], $total, $taxes);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {
 						$item = new stdClass();
 						$item->sku = $order_data['totals'][$i]['code'];
 						$item->name = $order_data['totals'][$i]['title'];
-						$item->amount = number_format($order_data['totals'][$i]['value'], 2);
+						$item->amount = $order_data['totals'][$i]['value'];
 						$item->qty = 1;
 						$items[] = $item;
 					}
@@ -46,6 +49,7 @@ class ControllerPaymentG2APay extends Controller {
 			}
 		}
 
+		//check this
 		$ordered_products = $this->model_account_order->getOrderProducts($this->session->data['order_id']);
 
 		foreach ($ordered_products as $product) {
@@ -74,6 +78,7 @@ class ControllerPaymentG2APay extends Controller {
 			'amount' => $order_total,
 			'currency' => $order_info['currency_code'],
 			'email' => $order_info['email'],
+//			'email' => $this->config->get('g2apay_username'),
 			'url_failure' => $this->url->link('checkout/failure'),
 			'url_ok' => $this->url->link('payment/g2apay/success'),
 			'items' => json_encode($items)
@@ -86,11 +91,11 @@ class ControllerPaymentG2APay extends Controller {
 		$this->model_payment_g2apay->logger($fields);
 
 		if ($response_data === false) {
-			$this->response->redirect($this->url->link('payment/failure', '', true));
+			$this->response->redirect($this->url->link('payment/failure', '', 'SSL'));
 		}
 
 		if (strtolower($response_data->status) != 'ok') {
-			$this->response->redirect($this->url->link('payment/failure', '', true));
+			$this->response->redirect($this->url->link('payment/failure', '', 'SSL'));
 		}
 
 		$this->model_payment_g2apay->addG2aOrder($order_info);

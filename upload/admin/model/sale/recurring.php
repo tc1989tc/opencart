@@ -136,7 +136,7 @@ class ModelSaleRecurring extends Model {
 	public function getRecurringTransactions($order_recurring_id) {
 		$transactions = array();
 
-		$query = $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC");
+		$query = $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
 
 		foreach ($query->rows as $result) {
 			switch ($result['type']) {

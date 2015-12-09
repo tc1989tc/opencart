@@ -89,7 +89,11 @@ class ControllerCheckoutGuestShipping extends Controller {
 			$data['address_custom_field'] = array();
 		}
 
-		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest_shipping.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/guest_shipping.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/checkout/guest_shipping.tpl', $data));
+		}
 	}
 
 	public function save() {
@@ -99,7 +103,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 
 		// Validate if customer is logged in.
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
 		// Validate cart has products and has stock.
@@ -109,7 +113,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 
 		// Check if guest checkout is available.
 		if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
+			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
 		if (!$json) {

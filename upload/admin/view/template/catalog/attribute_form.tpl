@@ -50,9 +50,6 @@
                 <?php } ?>
                 <?php } ?>
               </select>
-              <?php if ($error_attribute_group) { ?>
-              <div class="text-danger"><?php echo $error_attribute_group; ?></div>
-              <?php } ?>
             </div>
           </div>
           <div class="form-group">

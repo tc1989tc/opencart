@@ -247,8 +247,7 @@ class ModelPaymentPPExpress extends Model {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
 
-					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
 				}
 
 				$sort_order = array();
@@ -285,7 +284,7 @@ class ModelPaymentPPExpress extends Model {
 		$recurring_products = $this->cart->getRecurringProducts();
 
 		if ($recurring_products) {
-			$this->load->language('payment/pp_express');
+			$this->language->load('payment/pp_express');
 
 			foreach ($recurring_products as $item) {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';

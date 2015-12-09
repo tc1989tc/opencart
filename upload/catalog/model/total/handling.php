@@ -1,8 +1,6 @@
 <?php
 class ModelTotalHandling extends Model {
-	public function getTotal($totals) {
-		extract($totals);
-		
+	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (($this->cart->getSubTotal() > $this->config->get('handling_total')) && ($this->cart->getSubTotal() > 0)) {
 			$this->load->language('total/handling');
 

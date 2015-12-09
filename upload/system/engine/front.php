@@ -7,11 +7,11 @@ final class Front {
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-	
+
 	public function addPreAction($pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
-	
+
 	public function dispatch($action, $error) {
 		$this->error = $error;
 
@@ -30,8 +30,8 @@ final class Front {
 		}
 	}
 
-	private function execute($action, $args = array()) {
-		$result = $action->execute($this->registry, $args);
+	private function execute($action) {
+		$result = $action->execute($this->registry);
 
 		if (is_object($result)) {
 			$action = $result;
@@ -40,7 +40,7 @@ final class Front {
 
 			$this->error = '';
 		} else {
-			$action = '';	
+			$action = false;
 		}
 
 		return $action;

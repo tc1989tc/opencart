@@ -11,20 +11,20 @@ class ControllerFeedOpenbaypro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('feed/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->link('feed/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
-		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -34,7 +34,7 @@ class ControllerFeedOpenbaypro extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('feed/openbaypro', $data));
+		$this->response->setOutput($this->load->view('feed/openbaypro.tpl', $data));
 	}
 
 	protected function validate() {
@@ -79,11 +79,9 @@ class ControllerFeedOpenbaypro extends Controller {
 		// delete the event triggers
 		if (version_compare(VERSION, '2.0.1', '>=')) {
 			$this->load->model('extension/event');
-
 			$this->model_extension_event->deleteEvent('openbay');
 		} else {
 			$this->load->model('tool/event');
-
 			$this->model_tool_event->deleteEvent('openbay');
 		}
 	}

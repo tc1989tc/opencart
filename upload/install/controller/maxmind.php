@@ -3,12 +3,10 @@ class ControllerMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
+		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `maxmind_key` = '" . $db->escape($this->request->post['maxmind_key']) . "', `maxmind_score` = '" . (int)$this->request->post['maxmind_score'] . "', `maxmind_order_status_id` = '" . (int)$this->request->post['maxmind_order_status_id'] . "'  WHERE `store_id` = '0' AND `code` = 'maxmind'");
-
-			$db->query("INSERT INTO `oc_extension` (`type`, `code`) VALUES ('fraud', 'maxmind')");
+			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `config_fraud_status_id` = '1', `config_fraud_score` = '" . (int)$this->request->post['config_fraud_score'] . "', `config_fraud_key` = '" . $db->escape($this->request->post['config_fraud_score']) . "', `config_fraud_detection` = '" . (int)$this->request->post['config_fraud_detection'] . "' WHERE `store_id` = '0' AND `code` = 'config'");
 
 			$this->session->data['success'] = $this->language->get('text_maxmind_success');
 
@@ -22,48 +20,54 @@ class ControllerMaxmind extends Controller {
 			$data['text_maxmind_top'] = $this->language->get('text_maxmind_top');
 			$data['text_maxmind_link'] = $this->language->get('text_maxmind_link');
 
-			$data['entry_key'] = $this->language->get('entry_key');
-			$data['entry_score'] = $this->language->get('entry_score');
-			$data['entry_order_status'] = $this->language->get('entry_order_status');
+			$data['entry_licence_key'] = $this->language->get('entry_licence_key');
+			$data['entry_risk'] = $this->language->get('entry_risk');
+			$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
 
-			$data['help_score'] = $this->language->get('help_score');
-			$data['help_order_status'] = $this->language->get('help_order_status');
+			$data['help_maxmind_risk'] = $this->language->get('help_maxmind_risk');
+			$data['help_maxmind_fraud'] = $this->language->get('help_maxmind_fraud');
 
 			$data['button_continue'] = $this->language->get('button_continue');
 			$data['button_back'] = $this->language->get('button_back');
 
 			$data['action'] = $this->url->link('maxmind');
 
-			if (isset($this->error['key'])) {
-				$data['error_key'] = $this->error['key'];
+			if (isset($this->request->post['config_fraud_detection'])) {
+				$data['config_fraud_detection'] = $this->request->post['config_fraud_detection'];
 			} else {
-				$data['error_key'] = '';
+				$data['config_fraud_detection'] = '';
 			}
 
-			if (isset($this->error['score'])) {
-				$data['error_score'] = $this->error['score'];
+			if (isset($this->request->post['config_fraud_key'])) {
+				$data['config_fraud_key'] = $this->request->post['config_fraud_key'];
 			} else {
-				$data['error_score'] = '';
+				$data['config_fraud_key'] = '';
 			}
 
-			if (isset($this->request->post['maxmind_key'])) {
-				$data['maxmind_key'] = $this->request->post['maxmind_key'];
+			if (isset($this->request->post['config_fraud_score'])) {
+				$data['config_fraud_score'] = $this->request->post['config_fraud_score'];
 			} else {
-				$data['maxmind_key'] = '';
-			}
-
-			if (isset($this->request->post['maxmind_score'])) {
-				$data['maxmind_score'] = $this->request->post['maxmind_score'];
-			} else {
-				$data['maxmind_score'] = '80';
+				$data['config_fraud_score'] = '80';
 			}
 
 			$data['order_statuses'] = $db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '1'  ORDER BY name ASC")->rows;
 
-			if (isset($this->request->post['maxmind_order_status_id'])) {
-				$data['maxmind_order_status_id'] = $this->request->post['maxmind_order_status_id'];
+			if (isset($this->request->post['config_fraud_status_id'])) {
+				$data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
 			} else {
-				$data['maxmind_order_status_id'] = '';
+				$data['config_fraud_status_id'] = '';
+			}
+
+			if (isset($this->error['fraud_key'])) {
+				$data['error_fraud_key'] = $this->error['fraud_key'];
+			} else {
+				$data['error_fraud_key'] = '';
+			}
+
+			if (isset($this->error['fraud_score'])) {
+				$data['error_fraud_score'] = $this->error['fraud_score'];
+			} else {
+				$data['error_fraud_score'] = '';
 			}
 
 			$data['back'] = $this->url->link('step_4');
@@ -71,17 +75,17 @@ class ControllerMaxmind extends Controller {
 			$data['footer'] = $this->load->controller('footer');
 			$data['header'] = $this->load->controller('header');
 
-			$this->response->setOutput($this->load->view('maxmind', $data));
+			$this->response->setOutput($this->load->view('maxmind.tpl', $data));
 		}
 	}
 
 	private function validate() {
-		if (!$this->request->post['maxmind_key']) {
-			$this->error['key'] = $this->language->get('error_key');
+		if (!$this->request->post['config_fraud_key']) {
+			$this->error['fraud_key'] = $this->language->get('error_key');
 		}
 
-		if (!$this->request->post['maxmind_score'] || (int)$this->request->post['maxmind_score'] > 100 || (int)$this->request->post['maxmind_score'] < 0) {
-			$this->error['score'] = $this->language->get('error_score');
+		if (!$this->request->post['config_fraud_score'] || (int)$this->request->post['config_fraud_score'] > 100 || (int)$this->request->post['config_fraud_score'] < 0) {
+			$this->error['fraud_score'] = $this->language->get('error_score');
 		}
 
 		return !$this->error;

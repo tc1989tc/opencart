@@ -61,6 +61,10 @@ class ControllerCommonColumnLeft extends Controller {
 			}
 		}
 
-		return $this->load->view('common/column_left', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/column_left.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/common/column_left.tpl', $data);
+		} else {
+			return $this->load->view('default/template/common/column_left.tpl', $data);
+		}
 	}
 }
