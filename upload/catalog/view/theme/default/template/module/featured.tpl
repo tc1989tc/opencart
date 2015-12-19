@@ -36,6 +36,7 @@
         <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
         <button type="button" onclick="window.location.href='<?php echo $product['store_introduce'];?>'"><i class="fa fa-user"></i></button>
     </div>
+    </div>
   </div>
   <?php } ?>
 </div>
