@@ -34,9 +34,7 @@
       <div class="button-group">
         <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
-	 <button type="button" data-toggle="tooltip" title="<?php echo $button_store; ?>"><i class="fa fa-user"></i><a href="<?php  echo $product['store_introduce'];?>"></a></button>
-      </div>
+        <button type="button" onclick="window.location.href='<?php echo $product['store_introduce'];?>'"><i class="fa fa-user"></i></button>
     </div>
   </div>
   <?php } ?>
