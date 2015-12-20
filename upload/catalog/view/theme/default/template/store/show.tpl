@@ -1,21 +1,21 @@
 <?php echo $header; ?>
 <div class="container">
 	<div class="row ">
-		<h2 class="h2"><?php echo $store_name; ?></h2>
+		<h1 class="h1 center-block"><?php echo $store_name; ?></h2>
 	</div>
 	<div class="row">
-		<p><?php echo $store_introduce; ?></p>
+		<p class="center-block"><?php echo $store_introduce; ?></p>
 	</div>
 	<div class="row">
-		<address>
-			<strong><?php echo $store_address;?></strong><br>
-			<abbr title="Phone">P:</abbr><?php echo $store_phone><br>
+		<address class="center-block">
+			<strong><?php echo $store_address; ?></strong><br>
+			<abbr title="Phone">P:</abbr><?php echo $store_phone; ?><br>
 			<strong>Email</strong><br>
 			<a href="mailto:#"><?php echo $store_email; ?></a>
 		</address>
 	</div>
 	<div class="row">
-		<table class="table table-bordered">
+		<table class="table table-bordered center-block">
 			<thead>
 				<th>Image</th>
 				<th>introduce</th>
