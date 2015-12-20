@@ -21,7 +21,7 @@ class ControllerStoreShow extends Controller {
 		$productIds = $this->model_catalog_product->getAllProductIdsbyCustomStore($storeId);
 		if ($productIds) {
 			foreach ($productIds as $product_id) {
-				$product_id = $product_id['product_id']
+				$product_id = $product_id['product_id'];
 				$product_info = $this->model_catalog_product->getProduct($product_id);
 
 				if ($product_info) {
