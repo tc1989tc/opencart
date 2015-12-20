@@ -33,7 +33,7 @@ class ControllerStoreShow extends Controller {
 					$data['customerProduces'][] = array(
 																				'image' => $image,
 																				'name' => $product_info['name'],
-																				'product_link' => $this->url->link('product/product', 'product_id=' . $product_info['product_id']
+																				'product_link' => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 																				);
 					$data['customerhasProduces'] = true;
 				}
