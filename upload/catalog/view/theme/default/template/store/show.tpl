@@ -32,7 +32,7 @@
 			<?php foreach ($customerProduces as $product) { ?>
 				<tr>
 					<td><image class="img-rounded" src="<?php echo $product['image'];?>"></td>
-					<td><a href="<?php echo $product[product_link];?>"><?php echo $product['name'];?></a></td>
+					<td><a href="<?php echo $product['product_link'];?>"><?php echo $product['name'];?></a></td>
 				<tr>
 			<?php } ?>
 			</tbody>
