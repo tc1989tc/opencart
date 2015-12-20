@@ -1048,13 +1048,16 @@ CREATE TABLE IF NOT EXISTS `oc_customer` (
 CREATE TABLE IF NOT EXISTS `oc_customer_store` (
   `customer_store_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_name` varchar(255) NOT NULL,
+  `store_phone` varchar(25) NOT NULL,
+  `store_address` varchar(100) NOT NULL,
+  `store_email` varchar(50) NOT NULL,
   `store_desc` text NOT NULL,
   PRIMARY KEY (`customer_store_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `oc_customer_store` (`customer_store_id`, `store_name`, `store_desc`) VALUES
-(0, 'Admin store', 'Open for test my store'),
-(1, 'test for customer store', 'just for you');
+INSERT INTO `oc_customer_store` (`customer_store_id`, `store_name`, `store_desc`, `store_phone`,`store_address`, `store_email`) VALUES
+(1, 'Admin store', 'Open for test my store','023-888888','shanghai putuo', 'admin@opencart.cn'),
+(2, 'test for customer store', 'just for you', '023-888888','shanghai putuo', 'admin@opencart.cn');
 -- --------------------------------------------------------
 
 --
@@ -2248,7 +2251,7 @@ CREATE TABLE IF NOT EXISTS `oc_product` (
   `viewed` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
-  `customer_store_id` int(11) NOT NULL DEFAULT '0',
+  `customer_store_id` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
