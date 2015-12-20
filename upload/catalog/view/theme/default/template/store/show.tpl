@@ -1,21 +1,28 @@
 <?php echo $header; ?>
 <div class="container">
 	<div class="row ">
-		<h1 class="h1 center-block"><?php echo $store_name; ?></h2>
+		<div class="col-xs-6 col-sm-3">
+		<h1 class="h1"><?php echo $store_name; ?></h2>
+		</div>
 	</div>
 	<div class="row">
-		<p class="center-block"><?php echo $store_introduce; ?></p>
+	<div class="col-xs-6 col-sm-3">
+		<p><?php echo $store_introduce; ?></p>
+	</div>
 	</div>
 	<div class="row">
-		<address class="center-block">
+	<div class="col-xs-6 col-sm-3">
+		<address>
 			<strong><?php echo $store_address; ?></strong><br>
 			<abbr title="Phone">P:</abbr><?php echo $store_phone; ?><br>
 			<strong>Email</strong><br>
 			<a href="mailto:#"><?php echo $store_email; ?></a>
 		</address>
 	</div>
+	</div>
 	<div class="row">
-		<table class="table table-bordered center-block">
+	<div class="col-xs-6 col-sm-3">
+		<table class="table table-bordered">
 			<thead>
 				<th>Image</th>
 				<th>introduce</th>
@@ -27,6 +34,7 @@
 				<tr>
 			</tbody>
 		</table>
+	</div>
 	</div>
 </div>
 <?php echo $footer; ?>
