@@ -511,7 +511,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getAllProductIdsbyCustomStore($id) {
-		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "oc_product WHERE customer_store_id=" . (int)$id);
+		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "product WHERE customer_store_id=" . (int)$id);
 		if ($query->num_rows) {
 			return $query->rows;
 		} else {
