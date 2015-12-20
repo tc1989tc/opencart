@@ -20,6 +20,7 @@
 		</address>
 	</div>
 	</div>
+	<?php if ($customerhasProduces) { ?>
 	<div class="row">
 	<div class="col-md-4 col-sm-3 col-md-offset-4">
 		<table class="table table-bordered">
@@ -28,13 +29,16 @@
 				<th>introduce</th>
 			</thead>
 			<tbody>
+			<?php foreach ($customerProduces as $product) { ?>
 				<tr>
-					<td><image class="img-rounded"></td>
-					<td><a href="#">SPintroduce</a></td>
+					<td><image class="img-rounded" src="<?php echo $product['image'];?>"></td>
+					<td><a href="<?php echo $product[product_link];?>"><?php echo $product['name'];?></a></td>
 				<tr>
+			<?php } ?>
 			</tbody>
 		</table>
 	</div>
 	</div>
+	<?php } ?>
 </div>
 <?php echo $footer; ?>

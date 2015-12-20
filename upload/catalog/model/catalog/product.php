@@ -509,4 +509,13 @@ class ModelCatalogProduct extends Model {
 			return 0;
 		}
 	}
+
+	public function getAllProductIdsbyCustomStore($id) {
+		$query = $this->db->query("SELECT product_id FROM " . DB_PREFIX . "oc_product WHERE customer_store_id=" . (int)$id);
+		if ($query->num_rows) {
+			return $query->rows;
+		} else {
+			return false;
+		}
+	}
 }
