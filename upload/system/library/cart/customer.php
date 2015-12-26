@@ -137,4 +137,10 @@ class Customer {
 
 		return $query->row['total'];
 	}
+
+	public function getCustomStoreId() {
+		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$this->customer_id . "'");
+
+		return $query->row['customer_store_id'];
+	}
 }
