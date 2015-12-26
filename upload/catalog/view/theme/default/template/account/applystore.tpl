@@ -17,7 +17,7 @@
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h2><?php echo $heading_title; ?></h2>
       <!-- Add you store information -->
-      <form class="form-horizontal" role="form" post="<?php echo $addStoreLink;?>">
+      <form class="form-horizontal" role="form" method="post" action="<?php echo $addStoreLink;?>">
 			   <div class="form-group">
 			      <label for="store_name" class="col-sm-2 control-label"><?php echo $store_name;?></label>
 			      <div class="col-sm-10">

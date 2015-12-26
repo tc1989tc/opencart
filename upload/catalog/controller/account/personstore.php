@@ -202,7 +202,8 @@ class ControllerAccountPersonstore extends Controller {
 			$data['store_description'] = $storeInfo['store_desc'];
 		}
 
-		$data['button_continue'] = $this->url->link('account/account', '', 'SSL');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 		$data['button_submit'] = $this->language->get('button_submit');
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
