@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row ">
 		<div class="col-md-4 col-sm-3 col-md-offset-4">
-		<h1 class="h1"><?php echo $store_name; ?></h2>
+		<h1 class="h1"><?php echo $store_name; ?></h1>
 		</div>
 	</div>
 	<div class="row">
