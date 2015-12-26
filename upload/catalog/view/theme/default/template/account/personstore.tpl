@@ -5,11 +5,7 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if (!$hasStore) { ?>
-  <div>
-    <a href="<?php echo $applyStoreLink;?>"> Apply Store</a>
-  </div>
-  <?php } else {?>
+
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
     <?php $class = 'col-sm-6'; ?>
@@ -18,7 +14,14 @@
     <?php } else { ?>
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
+    
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
+    	<?php if (!$hasStore) { ?>
+  		<div>
+    		<a href="<?php echo $applyStoreLink;?>"> Apply Store</a>
+  		</div>
+  		<?php } else {?>
+  	
     	<!-- Store inforation -->
     	<h2 class="h2"><?php echo $store_name; ?></h2>
     	<p><?php echo $store_introduce; ?></p>
@@ -73,7 +76,7 @@
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $addProductLink; ?>" class="btn btn-primary"><?php echo $button_addProduct; ?></a></div>
+        <div class="pull-left"><a href="<?php echo $addProductLink; ?>" class="btn btn-primary"><?php echo $button_addProduct; ?></a></div>
       </div>
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>

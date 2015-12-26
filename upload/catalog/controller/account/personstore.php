@@ -144,11 +144,7 @@ class ControllerAccountPersonstore extends Controller {
 		$customer_store_id = $this->customer->getCustomStoreId();
 		
 		# Add store or update information
-		if (isset($this->request->post['storeName']) && ($this->request->post['storeName']) && \
-			isset($this->request->post['storeDesc']) && ($this->request->post['storeDesc']) && \
-			isset($this->request->post['storeAddress']) && ($this->request->post['storeAddress']) && \
-			isset($this->request->post['storeEmail']) && ($this->request->post['storeEmail']) && \
-			isset($this->request->post['storeTelephone']) && ($this->request->post['storeTelephone'])) {			
+		if (isset($this->request->post['storeName']) && ($this->request->post['storeName']) && isset($this->request->post['storeDesc']) && ($this->request->post['storeDesc']) && isset($this->request->post['storeAddress']) && ($this->request->post['storeAddress']) && isset($this->request->post['storeEmail']) && ($this->request->post['storeEmail']) && isset($this->request->post['storeTelephone']) && ($this->request->post['storeTelephone'])) {			
 			$storeInfo = array(
 							'storeName' => $this->request->post['storeName'],
 							'storeDesc' => $this->request->post['storeDesc'],
@@ -161,7 +157,27 @@ class ControllerAccountPersonstore extends Controller {
 				$this->model_store_show->updateStoreInfo($storeInfo);
 			}
 		}
-		
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('account/wishlist')
+		);
+
+		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['addStoreLink'] = $this->url->link('account/personstore/applystore', '', 'SSL');
 		$data['store_name'] = $this->language->get('store_name');
@@ -185,6 +201,9 @@ class ControllerAccountPersonstore extends Controller {
 			$data['store_email'] = $storeInfo['store_email'];
 			$data['store_description'] = $storeInfo['store_desc'];
 		}
+
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_submit'] = $this->language->get('button_submit');
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
