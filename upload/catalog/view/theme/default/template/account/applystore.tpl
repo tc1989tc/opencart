@@ -21,34 +21,34 @@
 			   <div class="form-group">
 			      <label for="store_name" class="col-sm-2 control-label"><?php echo $store_name;?></label>
 			      <div class="col-sm-10">
-			         <input type="text" class="form-control" id="storeName" 
+			         <input type="text" class="form-control" id="storeName" name="storeName"
 			            placeholder="<?php echo $store_name_place;?>">
 			      </div>
 			   </div>
 			   <div class="form-group">
 			      <label for="store_description" class="col-sm-2 control-label"><?php echo $store_description; ?></label>
 			      <div class="col-sm-10">
-			         <textarea class="form-control" rows="5" placeholder="<?php echo $store_description_place;?>" id="storeDesc"></textarea>
+			         <textarea class="form-control" rows="5" placeholder="<?php echo $store_description_place;?>" id="storeDesc" name="storeDesc"></textarea>
 			      </div>
 			   </div>
 			   <div class="form-group">
 			      <label for="store_address" class="col-sm-2 control-label"><?php echo $store_address; ?></label>
 			      <div class="col-sm-10">
-			         <input type="text" class="form-control" id="storeAddress" 
+			         <input type="text" class="form-control" id="storeAddress" name="storeAddress"
 			            placeholder="<?php echo $store_address_place; ?>">
 			      </div>
 			   </div>
 			   <div class="form-group">
 			      <label for="store_email" class="col-sm-2 control-label"><?php echo $store_email;?></label>
 			      <div class="col-sm-10">
-			         <input type="email" class="form-control" id="storeEmail" 
+			         <input type="email" class="form-control" id="storeEmail" name="storeEmail"
 			            placeholder="<?php echo $store_email_place;?>">
 			      </div>
 			   </div>
 			   <div class="form-group">
 			      <label for="store_telephone" class="col-sm-2 control-label"><?php echo $store_telephone;?></label>
 			      <div class="col-sm-10">
-			         <input type="tel" class="form-control" id="storeTelephone" 
+			         <input type="tel" class="form-control" id="storeTelephone" name="storeTelephone"
 			            placeholder="<?php echo $store_telephone_place;?>">
 			      </div>
 			   </div>
