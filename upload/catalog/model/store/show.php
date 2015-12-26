@@ -15,8 +15,7 @@ class ModelStoreShow extends Model {
 	}
 	
 	public function updateStoreInfo($storeIn) {
-		$this->db->query("UPDATE " . DB_PREFIX . "customer_store SET store_name = '" . $this->db->escape($storeIn['storeName']) . "', store_desc = '" . $this->db->escape($storeIn['storeDesc']) . \
-			"', store_phone = '" . $this->db->escape($storeIn['storeTelephone']) . "', store_email = '" . $this->db->escape($storeIn['storeEmail']) . "', store_address = '" . $this->db->escape($storeIn['storeAddress']) . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer_store SET store_name = '" . $this->db->escape($storeIn['storeName']) . "', store_desc = '" . $this->db->escape($storeIn['storeDesc']) . "', store_phone = '" . $this->db->escape($storeIn['storeTelephone']) . "', store_email = '" . $this->db->escape($storeIn['storeEmail']) . "', store_address = '" . $this->db->escape($storeIn['storeAddress']) . "'");
 			
 	}
 
