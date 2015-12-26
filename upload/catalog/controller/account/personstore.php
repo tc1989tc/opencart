@@ -138,7 +138,7 @@ class ControllerAccountPersonstore extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 		
-		$this->load->language('account/applystore');
+		$this->load->language('account/personstore');
 		$this->load->model('store/show');
 		$customer_id = $this->customer->getId();
 		$customer_store_id = $this->customer->getCustomStoreId();
@@ -202,7 +202,7 @@ class ControllerAccountPersonstore extends Controller {
 			$data['store_description'] = $storeInfo['store_desc'];
 		}
 
-		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] = $this->url->link('account/account', '', 'SSL');
 		$data['button_submit'] = $this->language->get('button_submit');
 		
 		$data['column_left'] = $this->load->controller('common/column_left');

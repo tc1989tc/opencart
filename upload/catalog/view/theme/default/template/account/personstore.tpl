@@ -17,7 +17,7 @@
     
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
     	<?php if (!$hasStore) { ?>
-  		<div>
+  		<div class="col-sm-4 col-sm-offset-4">
     		<a href="<?php echo $applyStoreLink;?>"> Apply Store</a>
   		</div>
   		<?php } else {?>
@@ -74,10 +74,11 @@
       <?php } ?>
       <div class="buttons clearfix">
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+      	<?php if($hasStore) { ?>
+      	<div class="pull-left"><a href="<?php echo $addProductLink; ?>" class="btn btn-primary"><?php echo $button_addProduct; ?></a></div>
+      	<?php } ?>
       </div>
-      <div class="buttons clearfix">
-        <div class="pull-left"><a href="<?php echo $addProductLink; ?>" class="btn btn-primary"><?php echo $button_addProduct; ?></a></div>
-      </div>
+
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
