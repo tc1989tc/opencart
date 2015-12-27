@@ -518,4 +518,16 @@ class ModelCatalogProduct extends Model {
 			return false;
 		}
 	}
+
+	public function getProductStores($product_id) {
+		$product_store_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_store_data[] = $result['customer_store_id'];
+		}
+
+		return $product_store_data;
+	}
 }
