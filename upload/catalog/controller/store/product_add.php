@@ -518,7 +518,11 @@ class ControllerStoreProductadd extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('store/product_list.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/store/product_list.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/store/product_list.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/store/product_list.tpl', $data));
+		}
 	}
 
 	protected function getForm() {
@@ -1303,8 +1307,11 @@ class ControllerStoreProductadd extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('catalog/product_form.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/store/product_form.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/store/product_form.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/store/product_form.tpl', $data));
+		}
 	}
 
 	protected function validateForm() {
