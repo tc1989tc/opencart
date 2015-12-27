@@ -833,7 +833,8 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		$this->load->model('setting/store');
-
+		$this->load->model('catalog/product');
+		
 		$data['stores'] = $this->model_setting_store->getStores();
 
 		if (isset($this->request->post['product_store'])) {
