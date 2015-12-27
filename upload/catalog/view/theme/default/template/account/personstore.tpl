@@ -22,16 +22,19 @@
   		</div>
   		<?php } else {?>
   	
-    	<!-- Store inforation -->
-    	<h2 class="h2"><?php echo $store_name; ?></h2>
-    	<p><?php echo $store_introduce; ?></p>
-    	<address>
-			<strong><?php echo $store_address; ?></strong><br>
-			<abbr title="Phone">P:</abbr><?php echo $store_phone; ?><br>
-			<strong>Email</strong><br>
-			<a href="mailto:#"><?php echo $store_email; ?></a>
-			</address>
-		
+  		<div class="col-sm-4 col-sm-offset-4">
+  		
+    		<!-- Store inforation -->
+    		<h2 class="h2"><?php echo $store_name; ?></h2>
+    		<p><?php echo $store_introduce; ?></p>
+    		<address>
+				<strong><?php echo $store_address; ?></strong><br>
+				<abbr title="Phone">P:</abbr><?php echo $store_phone; ?><br>
+				<strong>Email</strong><br>
+				<a href="mailto:#"><?php echo $store_email; ?></a>
+				</address>
+			</div>
+			
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($products) { ?>
       <table class="table table-bordered table-hover">
