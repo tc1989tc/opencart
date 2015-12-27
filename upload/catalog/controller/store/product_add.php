@@ -308,7 +308,8 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		$data['breadcrumbs'] = array();
-
+		# FIXME
+		$this->session->data['token'] = '123456789';
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
@@ -339,9 +340,9 @@ class ControllerStoreProductadd extends Controller {
 
 		$this->load->model('tool/image');
 
-		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+		$product_total = $this->model_store_product_add->getTotalProducts($filter_data);
 
-		$results = $this->model_catalog_product->getProducts($filter_data);
+		$results = $this->model_store_product_add->getProducts($filter_data);
 
 		foreach ($results as $result) {
 			if (is_file(DIR_IMAGE . $result['image'])) {
@@ -352,7 +353,7 @@ class ControllerStoreProductadd extends Controller {
 
 			$special = false;
 
-			$product_specials = $this->model_catalog_product->getProductSpecials($result['product_id']);
+			$product_specials = $this->model_store_product_add->getProductSpecials($result['product_id']);
 
 			foreach ($product_specials  as $product_special) {
 				if (($product_special['date_start'] == '0000-00-00' || strtotime($product_special['date_start']) < time()) && ($product_special['date_end'] == '0000-00-00' || strtotime($product_special['date_end']) > time())) {
@@ -704,7 +705,9 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		$data['breadcrumbs'] = array();
-
+		#FIXME
+		$this->session->data['token'] = '123456789';
+		
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
@@ -712,7 +715,7 @@ class ControllerStoreProductadd extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('store/product_add', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
 		if (!isset($this->request->get['product_id'])) {
