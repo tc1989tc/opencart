@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogProduct extends Model {
+class ModelStoreProductadd extends Model {
 	public function addProduct($data) {
 		$this->event->trigger('pre.admin.product.add', $data);
 
