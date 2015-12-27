@@ -840,7 +840,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_store'])) {
 			$data['product_store'] = $this->request->post['product_store'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$data['product_store'] = $this->model_catalog_product->getProductStores($this->request->get['product_id']);
+			$data['product_store'] = $this->model_store_product_add->getProductStores($this->request->get['product_id']);
 		} else {
 			$data['product_store'] = array(0);
 		}
@@ -1040,7 +1040,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_category'])) {
 			$categories = $this->request->post['product_category'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$categories = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+			$categories = $this->model_store_product_add->getProductCategories($this->request->get['product_id']);
 		} else {
 			$categories = array();
 		}
@@ -1191,7 +1191,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_special'])) {
 			$product_specials = $this->request->post['product_special'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$product_specials = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
+			$product_specials = $this->model_store_product_add->getProductSpecials($this->request->get['product_id']);
 		} else {
 			$product_specials = array();
 		}
@@ -1212,7 +1212,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_image'])) {
 			$product_images = $this->request->post['product_image'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$product_images = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+			$product_images = $this->model_store_product_add->getProductImages($this->request->get['product_id']);
 		} else {
 			$product_images = array();
 		}
@@ -1263,7 +1263,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_related'])) {
 			$products = $this->request->post['product_related'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$products = $this->model_catalog_product->getProductRelated($this->request->get['product_id']);
+			$products = $this->model_store_product_add->getProductRelated($this->request->get['product_id']);
 		} else {
 			$products = array();
 		}
@@ -1271,7 +1271,7 @@ class ControllerStoreProductadd extends Controller {
 		$data['product_relateds'] = array();
 
 		foreach ($products as $product_id) {
-			$related_info = $this->model_catalog_product->getProduct($product_id);
+			$related_info = $this->model_store_product_add->getProduct($product_id);
 
 			if ($related_info) {
 				$data['product_relateds'][] = array(
@@ -1292,7 +1292,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_reward'])) {
 			$data['product_reward'] = $this->request->post['product_reward'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$data['product_reward'] = $this->model_catalog_product->getProductRewards($this->request->get['product_id']);
+			$data['product_reward'] = $this->model_store_product_add->getProductRewards($this->request->get['product_id']);
 		} else {
 			$data['product_reward'] = array();
 		}
@@ -1300,7 +1300,7 @@ class ControllerStoreProductadd extends Controller {
 		if (isset($this->request->post['product_layout'])) {
 			$data['product_layout'] = $this->request->post['product_layout'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$data['product_layout'] = $this->model_catalog_product->getProductLayouts($this->request->get['product_id']);
+			$data['product_layout'] = $this->model_store_product_add->getProductLayouts($this->request->get['product_id']);
 		} else {
 			$data['product_layout'] = array();
 		}
