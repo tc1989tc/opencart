@@ -312,17 +312,22 @@ class ControllerStoreProductadd extends Controller {
 		$this->session->data['token'] = '123456789';
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
+		);
+		
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('store/product_add', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['add'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/product/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('store/product_add/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['copy'] = $this->url->link('store/product_add/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('store/product_add/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['products'] = array();
 
@@ -516,6 +521,7 @@ class ControllerStoreProductadd extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/store/product_list.tpl')) {
