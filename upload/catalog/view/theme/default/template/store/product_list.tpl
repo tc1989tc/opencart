@@ -1,5 +1,14 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-<div id="content">
+<div class="container">
+<div class="row"><?php echo $column_left; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $class = 'col-sm-6'; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $class = 'col-sm-9'; ?>
+    <?php } else { ?>
+    <?php $class = 'col-sm-12'; ?>
+    <?php } ?>
+<div id="content" class="<?php echo $class;?>">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
@@ -157,6 +166,7 @@
       </div>
     </div>
   </div>
+  
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
@@ -235,4 +245,6 @@ $('input[name=\'filter_model\']').autocomplete({
 	}
 });
 //--></script></div>
+</div>
+</div>
 <?php echo $footer; ?>
