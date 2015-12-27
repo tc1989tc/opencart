@@ -1,14 +1,5 @@
 <?php echo $header; ?><?php echo $column_left; ?>
-<div class="container">
-<div class="row"><?php echo $column_left; ?>
-    <?php if ($column_left && $column_right) { ?>
-    <?php $class = 'col-sm-6'; ?>
-    <?php } elseif ($column_left || $column_right) { ?>
-    <?php $class = 'col-sm-9'; ?>
-    <?php } else { ?>
-    <?php $class = 'col-sm-12'; ?>
-    <?php } ?>
-<div id="content" class="<?php echo $class;?>">
+<div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
@@ -1410,6 +1401,4 @@ $('.datetime').datetimepicker({
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');
 //--></script></div>
-</div>
-</div>
 <?php echo $footer; ?> 
