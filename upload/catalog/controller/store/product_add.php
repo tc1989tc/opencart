@@ -869,6 +869,7 @@ class ControllerStoreProductadd extends Controller {
 			$data['price'] = '';
 		}
 
+		/*
 		$this->load->model('catalog/recurring');
 
 		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
@@ -879,8 +880,8 @@ class ControllerStoreProductadd extends Controller {
 			$data['product_recurrings'] = $this->model_catalog_product->getRecurrings($product_info['product_id']);
 		} else {
 			$data['product_recurrings'] = array();
-		}
-
+		}*/
+		$data['product_recurrings'] = array();
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -1058,7 +1059,7 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		// Filters
-		$this->load->model('catalog/filter');
+		/*$this->load->model('catalog/filter');
 
 		if (isset($this->request->post['product_filter'])) {
 			$filters = $this->request->post['product_filter'];
@@ -1066,8 +1067,9 @@ class ControllerStoreProductadd extends Controller {
 			$filters = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
 		} else {
 			$filters = array();
-		}
-
+		}*/
+		$filters = array();
+		
 		$data['product_filters'] = array();
 
 		foreach ($filters as $filter_id) {
@@ -1082,7 +1084,7 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		// Attributes
-		$this->load->model('catalog/attribute');
+		/* $this->load->model('catalog/attribute');
 
 		if (isset($this->request->post['product_attribute'])) {
 			$product_attributes = $this->request->post['product_attribute'];
@@ -1090,8 +1092,8 @@ class ControllerStoreProductadd extends Controller {
 			$product_attributes = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 		} else {
 			$product_attributes = array();
-		}
-
+		} */
+		$product_attributes = array();
 		$data['product_attributes'] = array();
 
 		foreach ($product_attributes as $product_attribute) {
@@ -1107,7 +1109,7 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		// Options
-		$this->load->model('catalog/option');
+		/* $this->load->model('catalog/option');
 
 		if (isset($this->request->post['product_option'])) {
 			$product_options = $this->request->post['product_option'];
@@ -1115,8 +1117,8 @@ class ControllerStoreProductadd extends Controller {
 			$product_options = $this->model_catalog_product->getProductOptions($this->request->get['product_id']);
 		} else {
 			$product_options = array();
-		}
-
+		}*/
+		$product_options = array();
 		$data['product_options'] = array();
 
 		foreach ($product_options as $product_option) {
@@ -1160,7 +1162,7 @@ class ControllerStoreProductadd extends Controller {
 			}
 		}
 
-		$this->load->model('sale/customer_group');
+		/* $this->load->model('sale/customer_group');
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
@@ -1170,8 +1172,9 @@ class ControllerStoreProductadd extends Controller {
 			$product_discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
 		} else {
 			$product_discounts = array();
-		}
+		}*/
 
+		$product_discounts = array();
 		$data['product_discounts'] = array();
 
 		foreach ($product_discounts as $product_discount) {
@@ -1233,7 +1236,7 @@ class ControllerStoreProductadd extends Controller {
 		}
 
 		// Downloads
-		$this->load->model('catalog/download');
+		/*$this->load->model('catalog/download');
 
 		if (isset($this->request->post['product_download'])) {
 			$product_downloads = $this->request->post['product_download'];
@@ -1242,7 +1245,8 @@ class ControllerStoreProductadd extends Controller {
 		} else {
 			$product_downloads = array();
 		}
-
+		*/
+		$product_downloads = array();
 		$data['product_downloads'] = array();
 
 		foreach ($product_downloads as $download_id) {
