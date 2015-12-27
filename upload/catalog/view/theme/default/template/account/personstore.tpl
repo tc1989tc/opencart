@@ -22,7 +22,7 @@
   		</div>
   		<?php } else {?>
   	
-  		<div class="col-sm-4 col-sm-offset-4">
+  		<div class="col-sm-8 col-sm-offset-4">
   		
     		<!-- Store inforation -->
     		<h2 class="h2"><?php echo $store_name; ?></h2>
@@ -33,10 +33,11 @@
 				<strong>Email</strong><br>
 				<a href="mailto:#"><?php echo $store_email; ?></a>
 				</address>
+				<div class="buttons clearfix">
+        	<div class="pull-right"><a href="<?php echo $editStore; ?>" class="btn btn-primary"><?php echo $button_editStore; ?></a></div>
+      	</div>
 			</div>
-			<div class="buttons clearfix col-sm-4 col-sm-offset-8">
-        <div class="pull-right"><a href="<?php echo $editStore; ?>" class="btn btn-primary"><?php echo $button_editStore; ?></a></div>
-      </div>
+			
 			
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($products) { ?>
