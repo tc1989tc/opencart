@@ -67,7 +67,7 @@ class ControllerAccountPersonstore extends Controller {
 		$data['button_editStore'] = $this->language->get('button_editStore');
 		$data['editStore'] = $this->url->link('account/personstore/editStore', '', 'SSL');
 		
-		$data['addProductLink'] = $this->url->link('account/personstore/addproduct');
+		$data['addProductLink'] = $this->url->link('store/product_add');
 		$data['button_addProduct'] = $this->language->get('button_addProduct');
 		
 		$data['products'] = array();
