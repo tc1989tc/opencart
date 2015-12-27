@@ -33,3 +33,4 @@ $_['store_email_place'] = 'Type Your Store Email';
 $_['store_telephone'] = 'Store Telphone';
 $_['store_telephone_place'] = 'Type Your Store Telphone';
 $_['button_submit'] = 'Submit';
+$_['button_editStore'] = 'Edit';

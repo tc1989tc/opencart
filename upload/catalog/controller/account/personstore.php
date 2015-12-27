@@ -64,7 +64,9 @@ class ControllerAccountPersonstore extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_cart'] = $this->language->get('button_cart');
 		$data['button_remove'] = $this->language->get('button_remove');
-
+		$data['button_editStore'] = $this->language->get('button_editStore');
+		$data['editStore'] = $this->url->link('account/personstore/editStore', '', 'SSL');
+		
 		$data['addProductLink'] = $this->url->link('account/personstore/addproduct');
 		$data['button_addProduct'] = $this->language->get('button_addProduct');
 		
@@ -205,7 +207,7 @@ class ControllerAccountPersonstore extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 		$data['button_submit'] = $this->language->get('button_submit');
-		
+	
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -218,6 +220,10 @@ class ControllerAccountPersonstore extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/applystore.tpl', $data));
 		}
+	}
+
+	public function editStore() {
+		# edit customer store
 	}
 }
 

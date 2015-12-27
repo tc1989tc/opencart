@@ -34,6 +34,9 @@
 				<a href="mailto:#"><?php echo $store_email; ?></a>
 				</address>
 			</div>
+			<div class="buttons clearfix col-sm-4 col-sm-offset-8">
+        <div class="pull-right"><a href="<?php echo $editStore; ?>" class="btn btn-primary"><?php echo $button_editStore; ?></a></div>
+      </div>
 			
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($products) { ?>
